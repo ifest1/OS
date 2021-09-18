@@ -1,5 +1,4 @@
-
-print_string:
+print_string_bios:
     mov ah, 0x0e
     .loop:
         cmp [si], byte 0

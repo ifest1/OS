@@ -16,7 +16,7 @@
 
 # TODO
 
-- [ ] GDT
+- [x] GDT
 - [ ] IDT
 - [ ] Keyboard
 - [ ] PIT
@@ -53,6 +53,13 @@
 
 - Looks like the constants must defined at the bottom of the ASM file.
 - Include other ASM files as well.
+
+## Next steps
+
+- Clear the screen with blue blackground
+- Write print string on protected mode
+- Build the kernel using Makefile
+- Pass the control to some high level language
 
 ## Resources
 

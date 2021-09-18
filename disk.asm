@@ -1,7 +1,8 @@
-load_kernel:
-    mov si, READING_FROM_DISK_MESSAGE
-    call print_string
+disk_failure:
+    jmp $
 
+load_kernel:
+    mov [DISK], dl
     mov bx, KERNEL_LOCATION
     mov ah, 0x02        ; BIOS read from disk operation
     mov al, 1           ; Number of sectors to read
@@ -12,11 +13,5 @@ load_kernel:
     jc disk_failure
     ret
 
-disk_failure:
-    mov si, DISK_FAILURE_MESSAGE
-    call print_string
-    ret
-
-DISK_FAILURE_MESSAGE: db 'Failure on disk loading', 0
-READING_FROM_DISK_MESSAGE: db 'Loading Kernel from disk', 0
+DISK: db 0
 KERNEL_LOCATION equ 0x1000
