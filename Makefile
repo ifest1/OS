@@ -25,6 +25,6 @@ build:
 	make disk.img
 
 clean:
-	rm -fr *.bin *.o
+	rm -fr *.bin *.o *.img
 	rm -fr kernel/*.o boot/*.bin drivers/*.o
 
