@@ -5,7 +5,7 @@ load_kernel:
     mov [DISK], dl
     mov bx, KERNEL_LOCATION
     mov ah, 0x02        ; BIOS read from disk operation
-    mov al, 1           ; Number of sectors to read
+    mov al, 15          ; Number of sectors to read
     mov ch, 0           ; Read from the cylinder 0
     mov cl, 2           ; Starting from sector 2
     mov dh, 0           ; Head 0

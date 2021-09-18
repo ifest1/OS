@@ -19,14 +19,13 @@ enable_a20:
     out 0x92, al
     ret
 
-%include "gdt.asm"
-%include "print.asm"
-%include "disk.asm"
-%include "switch_to_pm.asm"
+%include "boot/gdt.asm"
+%include "boot/switch_to_pm.asm"
+%include "drivers/disk.asm"
 
 [bits 32]
-%include "screen.asm"
-%include "set_registers_pm.asm"
+%include "boot/set_screen.asm"
+%include "boot/set_registers_pm.asm"
 
 start_protected_mode:
     call set_registers
