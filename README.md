@@ -4,7 +4,21 @@
 
 ## Bootloader
 
+The bootloader is the first piece of code that the system runs.
+The BIOS looks at the last 2 bytes of the disk's first sector,
+if this two bytes matches the magic number (0xAA55) then its
+a bootable disk. Once the system is booted the bootloader can
+access some BIOS subroutines to read bytes from disk, print
+characters in the screen, etc.
+
 ## Real mode
+
+The system boots up in Real Mode, in this mode we can access BIOS
+routines but we are unable to access more than 1MB of memory. There
+is some securities implications in this mode as well, in this we don't
+have hardware-based memory protection like GDT. Memory addressing is very
+difficult in this mode since we have to use segment register to access
+memory addresses above 64K.
 
 ## Protected mode
 
