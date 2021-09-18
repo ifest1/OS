@@ -1,4 +1,4 @@
-switch_to_protected_mode:
+switch_to_pm:
     cli
     lgdt [GDT_DESCRIPTOR]
     mov eax, cr0

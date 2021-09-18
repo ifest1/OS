@@ -19,7 +19,10 @@ disk.img: boot/bootloader.bin kernel.bin
 	dd conv=notrunc if=$(word 2, $^) of=$@ bs=512 count=1 seek=1
 
 run:
+	make clean
+	make build
 	qemu-system-i386 -machine q35 -fda disk.img
+	make clean
 
 build:
 	make disk.img

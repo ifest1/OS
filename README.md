@@ -22,11 +22,28 @@ memory addresses above 64K.
 
 ## Protected mode
 
+In this mode we can access higher memory addresses without concerning about
+segment registers. This mode also allow us to define how our memory will be
+accessed, memory access privileges, etc.
+
 ## GDT
+
+To be able to switch to protected mode we must load a descriptor table to the CPU
+to tell the CPU how the memory will be accessed (segments, memory protection). Once
+we load the GDT we are officially in protected mode.
 
 ## IDT
 
+There is also another structure that we need to tell to the CPU when we switch to protected
+mode: IDT, this describes a table of vectors storing some interrupt service routines addresses.
+If we switched to protected mode we will need to load this structure since we can't access the
+BIOS interrupt service routines anymore.
+
 ## Graphics
+
+The VGA is mapped into the main memory, in other words, the device controller memory can be accessed
+from the RAM, specifically 0xb8000 is the beginning of the screen. Each 2 bytes we can define a
+character (1 byte) and background and foreground color (remaining 1 byte).
 
 # TODO
 

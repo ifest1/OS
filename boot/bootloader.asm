@@ -1,13 +1,13 @@
 [ORG 0x7C00]
 
 start:
-    call enter_text_mode
+    call text_mode
     call load_kernel
     call enable_a20
-    call switch_to_protected_mode
-    jmp CODE_SEG:start_protected_mode
+    call switch_to_pm
+    jmp CODE_SEG:start_pm
 
-enter_text_mode:
+text_mode:
     mov ah, 0x0
     mov al, 0x3
     int 0x10
@@ -20,14 +20,14 @@ enable_a20:
     ret
 
 %include "boot/gdt.asm"
-%include "boot/switch_to_pm.asm"
-%include "drivers/disk.asm"
+%include "boot/pm.asm"
+%include "boot/disk.asm"
 
 [bits 32]
-%include "boot/set_screen.asm"
-%include "boot/set_registers_pm.asm"
+%include "boot/screen.asm"
+%include "boot/registers.asm"
 
-start_protected_mode:
+start_pm:
     call set_registers
     call clear_screen
     call KERNEL_LOCATION
