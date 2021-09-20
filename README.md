@@ -1,6 +1,8 @@
-# Operating System from scratch
+# Operating System from scratch (educational purpose)
 
 # [LICENSE](LICENSE)
+
+# Notes
 
 ## Bootloader
 
@@ -79,7 +81,7 @@ Memory Controllers a Multiplexer and Demultiplexer circuits to select the exact 
 - Double Data Rate (DDR) Controller
   A DDR Controller is used to refresh DDR SDRAM, which uses the System Clock pulse to allow reading and writing memory.
 - Dual Channel Controller
-  A Dual Channel Controller are used where DRAM devices are seperated into two small busses, allowing reading and writing two memory locations at once. This helps increasing speed when accessing RAM.]
+  A Dual Channel Controller are used where DRAM devices are seperated into two small busses, allowing reading and writing two memory locations at once. This helps increasing speed when accessing RAM.
 
 ## I/O Subsystem
 
@@ -94,52 +96,10 @@ The I/O SubSystem simply represents Port I/O. This is the basic system that prov
 
 ## Memory mapping
 
-# TODO
-
-- [x] GDT
-- [ ] IDT
-- [ ] Keyboard
-- [ ] PIT
-- [ ] RTC
-- [ ] Iinitrd
-- [ ] Drawing on framebuffer
-- [ ] Serial debugging
-- [ ] VFS
-- [ ] Paging
-- [ ] Heap
-- [ ] PMM
-- [ ] VMM
-- [ ] ACPI
-- [ ] Shutdown
-- [ ] Reboot
-- [ ] HPET
-- [ ] PCI
-- [ ] AHCI
-- [ ] Real filesystems (ext2, fat...)
-- [ ] Multithreading
-- [ ] TSS
-- [ ] Userspace
-- [ ] System calls
-- [ ] POSIX
-- [ ] ELF execution
-- [ ] Port libc (Newlib)
-- [ ] Port apps
-- [ ] Sound
-- [ ] Network
-- [ ] USB
-- [ ] GUI
-
-## Notes
-
-- Looks like the constants must defined at the bottom of the ASM file.
-- Include other ASM files as well.
-
 ## Next steps
 
-- Clear the screen with blue blackground
-- Write print string on protected mode
-- Build the kernel using Makefile
-- Pass the control to some high level language
+- Interrupt Descriptor Table
+- Keyboard interrupt routine
 
 ## Resources
 
