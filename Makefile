@@ -1,33 +1,31 @@
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c)
-OBJ_FILES = $(C_SOURCES:.c=.o)
+C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c)
+OBJ_FILES = $(C_SOURCES:.c=.o cpu/interrupt.o)
+CFLAGS = -fno-pie -ffreestanding
 
 %.o: %.asm
 	nasm $< -f elf32 -o $@
 
 %.o: %.c
-	gcc -m32 -fno-pie -ffreestanding -c $< -o $@
+	gcc -m32 ${CFLAGS} -c $< -o $@
 
 %.bin : %.asm
 	nasm $< -f bin -I '../../16bit/' -o $@
 
-kernel.bin: kernel/kernel_entry.o ${OBJ_FILES}
-	ld -o $@ -m elf_i386 -Ttext 0x1000 $< $(word 2, $^) --oformat binary
+os.img: boot/bootloader.bin kernel/kernel.bin
+	cat $^ > os-image.bin
 
-disk.img: boot/bootloader.bin kernel.bin
-	dd if=/dev/zero of=$@ bs=512 count=2880 && \
-	dd conv=notrunc if=$< of=$@ bs=512 count=1 seek=0 && \
-	dd conv=notrunc if=$(word 2, $^) of=$@ bs=512 count=1 seek=1
+kernel/kernel.bin: kernel/kernel_entry.o ${OBJ_FILES}
+	ld -o $@ -m elf_i386 -Ttext 0x1000 $^ --oformat binary
 
 run:
 	make clean
 	make build
-	qemu-system-i386 -machine q35 -fda disk.img
+	qemu-system-i386 -machine q35 -fda os-image.bin
 	make clean
 
-build:
-	make disk.img
+build: os.img
 
 clean:
 	rm -fr *.bin *.o *.img
-	rm -fr kernel/*.o boot/*.bin drivers/*.o
+	rm -fr kernel/*.o boot/*.bin drivers/*.o cpu/*.o
 

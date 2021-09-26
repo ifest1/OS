@@ -98,7 +98,7 @@ The I/O SubSystem simply represents Port I/O. This is the basic system that prov
 
 ## Next steps
 
-- Interrupt Descriptor Table
+- Take a look into PIC remapping
 - Keyboard interrupt routine
 
 ## Resources

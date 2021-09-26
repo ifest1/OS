@@ -3,7 +3,7 @@
 void print_string(char *string) {
     char *current_pos = (char*) VIDEO_MEMORY;
     int i = 0;
-    while (i < 14) {
+    while (i < 20000) {
         *current_pos = string[i];
         current_pos = current_pos + 2;
         i++;
@@ -12,5 +12,6 @@ void print_string(char *string) {
 }
 
 void main() {
-    print_string("Hello world");
+    init_idt();
+    print_string("Hello world ODAOJ OASJFDOISJD FOIASJDOI JAOISD JOAIFDJ GOIADJFGIOJSDOIFG JDSGJIODSGJIJ");
 }
