@@ -94,7 +94,9 @@ The I/O SubSystem simply represents Port I/O. This is the basic system that prov
 
 - THIS will be very important to us. This is our interface to the hardware. A Software Port is a number. Thats it. This number represents a hardware controller... Kind of. You may know that several port numbers could represent the same controller. The reason? Memory Mapped I/O.
 
-## Memory mapping
+### Device communication
+There are three basic forms of input and output that a typical computer system will use: I/O-mapped I/O, memory-mapped I/O, and direct memory access (DMA). I/O-mapped input/output uses special instructions to transfer data between the computer system and the outside world; memory-mapped I/O uses special memory locations in the normal address space of the CPU to communicate with real-world devices; DMA is a special form of memory-mapped I/O where the peripheral device reads and writes data in memory without going through the CPU.
+
 
 ## Next steps
 
