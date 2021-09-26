@@ -1,9 +1,9 @@
 #define VIDEO_MEMORY 0xb8000;
 
 void print_string(char *string) {
-    char *current_pos = (char*) VIDEO_MEMORY;
+    char *current_pos = (char*) VIDEO_MEMORY + 1000;
     int i = 0;
-    while (i < 20000) {
+    while (i < 11) {
         *current_pos = string[i];
         current_pos = current_pos + 2;
         i++;
@@ -13,5 +13,5 @@ void print_string(char *string) {
 
 void main() {
     init_idt();
-    print_string("Hello world ODAOJ OASJFDOISJD FOIASJDOI JAOISD JOAIFDJ GOIADJFGIOJSDOIFG JDSGJIODSGJIJ");
+    print_string("Hello world");
 }

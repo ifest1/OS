@@ -114,3 +114,5 @@ https://github.com/Absurdponcho/PonchoOS
 https://www.youtube.com/channel/UCQdZltW7bh1ta-_nCH7LWYw
 https://www.youtube.com/watch?v=7LTB4aLI7r0&list=PLxN4E629pPnKKqYsNVXpmCza8l0Jb6l8-
 https://www.youtube.com/watch?v=5FnrtmJXsdM&list=PLT7NbkyNWaqajsw8Xh7SP9KJwjfpP8TNX
+https://pdos.csail.mit.edu/6.828/2005/readings/hardware/8259A.pdf
+https://leftasexercise.com/category/osdev/
