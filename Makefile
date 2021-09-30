@@ -1,4 +1,4 @@
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c)
+C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c lib/*.c)
 OBJ_FILES = $(C_SOURCES:.c=.o cpu/interrupt.o)
 CFLAGS = -fno-pie -ffreestanding
 
@@ -27,5 +27,5 @@ build: os.img
 
 clean:
 	rm -fr *.bin *.o *.img
-	rm -fr kernel/*.o boot/*.bin drivers/*.o cpu/*.o
+	rm -fr kernel/*.o boot/*.bin drivers/*.o cpu/*.o lib/*.o
 

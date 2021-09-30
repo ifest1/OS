@@ -1,6 +1,21 @@
-#include "../include/stdint.h"
 #include "../include/idt.h"
-#include "./ports.c"
+#include "../include/ports.h"
+#include "../include/screen.h"
+#include "../lib/print.h"
+
+
+/*
+Low level functions to map the IRQ's to ISR's defined in ASM. This low level ISR's are calling
+a common stub routine  that sets the stack and registers and pass the control to a higher level IRQ
+handler.
+*/
+void load_isr(uint16_t irq_id, uint32_t isr) {
+    idt[irq_id].offset_low = (uint16_t) ((isr) & 0xFFFF);
+    idt[irq_id].offset_high = (uint16_t) (((isr) >> 16) & 0xFFFF);
+    idt[irq_id].unused = 0x00;
+    idt[irq_id].selector = 0x08;
+    idt[irq_id].type = 0x8E;
+}
 
 void init_idt() {
     load_isr(0, (uint32_t) isr0);
@@ -48,16 +63,49 @@ void init_idt() {
     outb(0x21, 0x00);
     outb(0xA1, 0x00);
 
+    load_isr(32, (uint32_t) isr32);
+    load_isr(33, (uint32_t) isr33);
+    load_isr(34, (uint32_t) isr34);
+    load_isr(35, (uint32_t) isr35);
+    load_isr(36, (uint32_t) isr36);
+    load_isr(37, (uint32_t) isr37);
+    load_isr(38, (uint32_t) isr38);
+    load_isr(39, (uint32_t) isr39);
+    load_isr(40, (uint32_t) isr40);
+    load_isr(41, (uint32_t) isr41);
+    load_isr(42, (uint32_t) isr42);
+    load_isr(43, (uint32_t) isr43);
+    load_isr(44, (uint32_t) isr44);
+    load_isr(45, (uint32_t) isr45);
+    load_isr(46, (uint32_t) isr46);
+    load_isr(47, (uint32_t) isr47);
+
+
     idtr.limit = (uint16_t) 256 * sizeof(idtr) - 1;
     idtr.base_address = (uint32_t) & idt;
     __asm__ volatile ("lidtl (%0)": : "r" (&idtr));
     __asm__ volatile ("sti");
 }
 
-void load_isr(uint16_t irq_id, uint32_t isr) {
-    idt[irq_id].offset_low = (uint16_t) ((isr) & 0xFFFF);
-    idt[irq_id].offset_high = (uint16_t) (((isr) >> 16) & 0xFFFF);
-    idt[irq_id].unused = 0x00;
-    idt[irq_id].selector = 0x08;
-    idt[irq_id].type = 0x8E;
+
+/*
+High level handler functions API, the functions below deals with registering IRQ handlers and
+handling IRQs.
+*/
+
+isr_t irq_handlers[256];
+
+void irq_handler(registers_t regs) {
+    //char *curr_irq = itoa(irq_handlers_loaded);
+    //printk(curr_irq, VIDEO_MEMORY);
+    //irq_handlers_loaded++;
+    if (irq_handlers[regs.int_no] != 0) {
+        isr_t handler = irq_handlers[regs.int_no];
+        handler(regs);
+    }
+}
+
+void load_irq_handler(uint8_t irq_no, isr_t handler) {
+    printk(itoa(irq_no), VIDEO_MEMORY);
+    irq_handlers[irq_no] = handler;
 }

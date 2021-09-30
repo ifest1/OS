@@ -1,4 +1,5 @@
 #include "../include/ports.h"
+#include "../include/stdint.h"
 /*
 Source: https://wiki.osdev.org/Inline_Assembly
 In the constraint, 'a' refers to EAX, 'b' to EBX, 'c' to ECX,
@@ -9,25 +10,25 @@ of the mapped variable (which allows some optimization).
 */
 
 // Port write byte
-static inline void outb(uint16_t port, uint8_t data) {
-    __asm__ volatile ("outb %%al, %%dx" : : "a" (data), "d" (port));
+void outb(uint16_t port, uint8_t data) {
+    __asm__ volatile ("out %%al, %%dx" : : "a" (data), "d" (port));
 }
 
 // Port read byte
-static inline uint8_t inb(uint16_t port) {
+uint8_t inb(uint16_t port) {
     uint8_t data;
-    __asm__ volatile ("inb %%dx, %%al": "=a" (data) : "d" (port));
+    __asm__ volatile ("in %%dx, %%al": "=a" (data) : "d" (port));
     return data;
 }
 
 // Port write word
-static inline void outw(uint16_t port, uint32_t data) {
-    __asm__ volatile ("outw %%al, %%dx": : "a" (data), "d" (port));
+void outw(uint16_t port, uint32_t data) {
+    __asm__ volatile ("out %%al, %%dx": : "a" (data), "d" (port));
 }
 
 // Port read word
-static inline uint32_t inw(uint16_t port) {
+uint32_t inw(uint16_t port) {
     uint32_t data;
-    __asm__ volatile ("inw %%dx, %%al" : "=a" (data) : "d" (port));
+    __asm__ volatile ("in %%dx, %%al" : "=a" (data) : "d" (port));
     return data;
 }

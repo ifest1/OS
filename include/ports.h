@@ -1,6 +1,11 @@
 #include "./stdint.h"
 
-static inline void outb(uint16_t port, uint8_t data);
-static inline uint8_t inb(uint16_t port);
-static inline void outw(uint16_t port, uint32_t data);
-static inline uint32_t inw(uint16_t port);
+#ifndef PORTS_H__
+#define PORTS_H__
+
+void outb(uint16_t port, uint8_t data);
+uint8_t inb(uint16_t port);
+void outw(uint16_t port, uint32_t data);
+uint32_t inw(uint16_t port);
+
+#endif
