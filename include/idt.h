@@ -35,12 +35,6 @@ typedef struct {
     uint32_t                base_address;
 } __attribute__((packed)) idtr_t;
 
-
-__attribute__ ((aligned(0x10)))
-static                      idt_entry_t idt[256];
-static                      idtr_t idtr;
-
-
 typedef struct registers
 {
     uint32_t                 ds;
@@ -61,13 +55,12 @@ typedef struct registers
     uint32_t                 ss;
 } registers_t;
 
-// Type = Function pointer to ISR handler.
 typedef void (*isr_t)(registers_t);
-
 
 void init_idt();
 void load_isr(uint16_t irq_id, uint32_t isr);
-
+void enable_interrupts();
+void disable_interrupts();
 
 extern void isr0();
 extern void isr1();
@@ -101,8 +94,6 @@ extern void isr28();
 extern void isr29();
 extern void isr30();
 extern void isr31();
-
-// After the PIC remapping, the system defined interrupts must be located at this IRQ range.
 extern void isr32();
 extern void isr33();
 extern void isr34();
@@ -119,7 +110,6 @@ extern void isr44();
 extern void isr45();
 extern void isr46();
 extern void isr47();
-
 
 void irq_handler(registers_t regs);
 void load_irq_handler(uint8_t irq_no, isr_t handler);

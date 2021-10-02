@@ -6,7 +6,7 @@
     cli
     push byte 0
     push byte %1
-    jmp isr_common_stub
+    jmp 0x08:isr_common_stub
 %endmacro
 
 %macro ISR_ERRCODE 1
@@ -14,7 +14,7 @@
   isr%1:
     cli
     push byte %1
-    jmp isr_common_stub
+    jmp 0x08:isr_common_stub
 %endmacro
 
 %macro ISR_DEVICES 2
@@ -23,7 +23,7 @@
     cli
     push byte %1
     push byte %2
-    jmp isr_common_stub
+    jmp 0x08:isr_common_stub
 %endmacro
 
 isr_common_stub:
@@ -81,9 +81,8 @@ ISR_NOERRCODE 26
 ISR_NOERRCODE 27
 ISR_NOERRCODE 28
 ISR_NOERRCODE 29
-ISR_NOERRCODE 30
+ISR_ERRCODE 30
 ISR_NOERRCODE 31
-
 ISR_DEVICES 0, 32
 ISR_DEVICES 1, 33
 ISR_DEVICES 2, 34
