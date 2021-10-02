@@ -18,7 +18,7 @@ void disable_interrupts() {
 }
 
 void idt_flush() {
-    __asm__ volatile ("lidtl (%0)": : "r" (&idt_ptr));
+    __asm__ volatile ("lidtl (%0)": : "m" (idt_ptr));
 }
 
 void set_idt_gate(uint16_t irq_id, uint32_t isr, uint16_t sel, uint8_t flags) {

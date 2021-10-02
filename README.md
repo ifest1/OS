@@ -102,6 +102,8 @@ There are three basic forms of input and output that a typical computer system w
 
 - Keyboard interrupt routine
 - Troubleshoot IRQ`s
+  - Don't mask IRQ 2
+  - Acknowledge keyboard controller
 
 ## Resources
 
@@ -116,3 +118,4 @@ https://www.youtube.com/watch?v=7LTB4aLI7r0&list=PLxN4E629pPnKKqYsNVXpmCza8l0Jb6
 https://www.youtube.com/watch?v=5FnrtmJXsdM&list=PLT7NbkyNWaqajsw8Xh7SP9KJwjfpP8TNX
 https://pdos.csail.mit.edu/6.828/2005/readings/hardware/8259A.pdf
 https://leftasexercise.com/category/osdev/
+https://k.lse.epita.fr/internals/8259a_controller.html
