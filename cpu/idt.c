@@ -3,9 +3,7 @@
 #include "../include/screen.h"
 #include "../lib/print.h"
 #include "../include/pic.h"
-#include "../include/irq.h"
 
-isr_t           interrupt_handlers[256];
 idtr_t          idt_ptr;
 idt_entry_t     idt[256];
 
@@ -22,19 +20,17 @@ void idt_flush() {
 }
 
 void set_idt_gate(uint16_t irq_id, uint32_t isr, uint16_t sel, uint8_t flags) {
-    idt[irq_id].offset_low = (uint16_t) ((isr) & 0xFFFF);
-    idt[irq_id].offset_high = (uint16_t) (((isr) >> 16) & 0xFFFF);
-    idt[irq_id].unused = 0x00;
-    idt[irq_id].selector = sel;
-    idt[irq_id].type = flags;
-}
-
-void set_idt_ptr() {
-    idt_ptr.limit = (uint16_t) 256 * sizeof(idt_entry_t) - 1;
-    idt_ptr.base_address = (uint32_t) & idt;
+    idt[irq_id].offset_low      = (uint16_t) ((isr) & 0xFFFF);
+    idt[irq_id].offset_high     = (uint16_t) (((isr) >> 16) & 0xFFFF);
+    idt[irq_id].unused          = 0x00;
+    idt[irq_id].selector        = sel;
+    idt[irq_id].type            = flags;
 }
 
 void init_idt() {
+    idt_ptr.limit               = (uint16_t) 256 * sizeof(idt_entry_t) - 1;
+    idt_ptr.base_address        = (uint32_t) & idt;
+
     set_idt_gate(0, (uint32_t) isr0, 0x08, 0x8E);
     set_idt_gate(1, (uint32_t) isr1, 0x08, 0x8E);
     set_idt_gate(2, (uint32_t) isr2, 0x08, 0x8E);
@@ -83,20 +79,6 @@ void init_idt() {
     set_idt_gate(45, (uint32_t) isr45, 0x08, 0x8E);
     set_idt_gate(46, (uint32_t) isr46, 0x08, 0x8E);
     set_idt_gate(47, (uint32_t) isr47, 0x08, 0x8E);
-    init_pics();
-    set_idt_ptr();
+
     idt_flush();
-    init_irq_lines();
-    enable_interrupts();
-}
-
-void irq_handler(registers_t regs) {
-    if (interrupt_handlers[regs.int_no] != 0) {
-        isr_t handler = interrupt_handlers[regs.int_no];
-        handler(regs);
-    }
-}
-
-void load_irq_handler(uint8_t irq_no, isr_t handler) {
-    interrupt_handlers[irq_no] = handler;
 }

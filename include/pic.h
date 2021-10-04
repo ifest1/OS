@@ -1,11 +1,11 @@
 #include "stdint.h"
 #ifndef PIC_H__
 #define PIC_H__
-#define PIC1_PORT_A             0x20        // Control port PIC1
-#define PIC2_PORT_A             0xA0        // Control port PIC2
+#define PIC1_CMD                0x20        // Control port PIC1
+#define PIC2_CMD                0xA0        // Control port PIC2
 
-#define PIC1_PORT_B             0x21        // Data port PIC1
-#define PIC2_PORT_B             0xA1        // Data port PIC2
+#define PIC1_DATA               0x21        // Data port PIC1
+#define PIC2_DATA               0xA1        // Data port PIC2
 
 #define PIC1_BASE_IDT_OFFSET    0x20        // PIC1 IDT interrupts offset after remapping
 #define PIC2_BASE_IDT_OFFSET    0x28        // PIC2 IDT interrupts offset after remapping
@@ -21,7 +21,9 @@
 #define ICW4_BUF_MASTER	        0x0C		// Buffered mode/master
 #define ICW4_SFNM	            0x10		// Special fully nested (not)
 
+#define PIC_EOI		            0x20        // End of interrupt
+
 void init_pics();
-void pic_set_mask(uint8_t irq_line, uint16_t pic_cmd_port);
-void pic_clear_mask(uint8_t irq_line, uint16_t pic_cmd_port);
+void pic_set_mask(uint8_t irq_line);
+void pic_clear_mask(uint8_t irq_line);
 #endif

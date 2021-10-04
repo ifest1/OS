@@ -55,7 +55,6 @@ typedef struct registers
     uint32_t                 ss;
 } registers_t;
 
-typedef void (*isr_t)(registers_t);
 
 void init_idt();
 void load_isr(uint16_t irq_id, uint32_t isr);
@@ -110,8 +109,5 @@ extern void isr44();
 extern void isr45();
 extern void isr46();
 extern void isr47();
-
-void irq_handler(registers_t regs);
-void load_irq_handler(uint8_t irq_no, isr_t handler);
 
 #endif
