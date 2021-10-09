@@ -17,12 +17,16 @@ uint16_t position(uint8_t x, uint8_t y) {
 }
 
 /* Cursor functions */
-void set_cursor(uint8_t x, uint8_t y) {
-    uint16_t pos = position(x, y);
-	outb(0x3D4, 0x0F);
+void set_cursor(uint16_t pos) {
+    outb(0x3D4, 0x0F);
 	outb(0x3D5, (uint8_t) (pos & 0xFF));
 	outb(0x3D4, 0x0E);
 	outb(0x3D5, (uint8_t) ((pos >> 8) & 0xFF));
+}
+
+void set_cursor_coordinates(uint8_t x, uint8_t y) {
+    uint16_t pos = position(x, y);
+    set_cursor(pos);
 }
 
 uint16_t get_cursor(void)
@@ -36,7 +40,7 @@ uint16_t get_cursor(void)
 }
 
 void newline_cursor() {
-    set_cursor(0, y(get_cursor()) + 1);
+    set_cursor_coordinates(0, y(get_cursor()) + 1);
 }
 
 /* Writes char at given position with bg and fg specified */

@@ -2,5 +2,5 @@
 #define UTILS_H__
 #define MAX_STR_ITOA_SIZE 20
 
-char *itoa(int n);
+char *itoa(int n, int base, int size);
 #endif
