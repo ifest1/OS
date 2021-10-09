@@ -4,7 +4,7 @@
 #include "../lib/print.h"
 #include "../lib/utils.h"
 
-const char KEYBOARD_SCANCODES[50] = {
+const char KEYBOARD_SCANCODES[0x57] = {
     ' ', ' ', '1', '2', '3', '4',
     '5', '6', '7', '8', '9', '0',
     '-', '=', ' ', ' ', 'Q', 'W',
@@ -18,8 +18,24 @@ const char KEYBOARD_SCANCODES[50] = {
 };
 
 void keyboard_handler(registers_t regs) {
+    char c;
     uint8_t scancode = inb(0x60);
     uint16_t pos = get_cursor();
-    print_char(pos, KEYBOARD_SCANCODES[scancode], WHITE_ON_BLUE);
-    set_cursor(pos + 1);
+    if (scancode <= 0x57) {
+        if (scancode == BACKSPACE) {
+            set_cursor(pos - 1);
+            print_char(pos - 1, ' ', WHITE_ON_BLUE);
+        }
+
+        if (scancode == ENTER) {
+            newline_cursor();
+        }
+
+        c = KEYBOARD_SCANCODES[scancode];
+
+        if (c != ' ') {
+            print_char(pos, c, WHITE_ON_BLUE);
+            set_cursor(pos + 1);
+        }
+    }
 }
