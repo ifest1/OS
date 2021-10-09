@@ -10,8 +10,11 @@
 void main() {
     init_idt();
     init_pics();
+    fill_screen(WHITE_ON_BLUE);
     load_irq_handler(IRQ0, timer_driver);
     load_irq_handler(IRQ1, keyboard_driver);
     enable_interrupts();
-    printk("from kernel", VIDEO_MEMORY + 200);
+    printk("from kernel");
+    printk("embaixo");
+    printk("embaixo3");
 }

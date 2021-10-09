@@ -1,4 +1,4 @@
 #ifndef PRINTK_H__
 #define PRINTK_H__
-void printk(char *str, int addr);
+void printk(char *str);
 #endif

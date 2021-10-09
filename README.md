@@ -100,10 +100,7 @@ There are three basic forms of input and output that a typical computer system w
 
 ## Next steps
 
-- Keyboard interrupt routine
-- Troubleshoot IRQ`s
-  - Don't mask IRQ 2
-  - Acknowledge keyboard controller
+- Scancodes decoding from keyboard
 
 ## Resources
 

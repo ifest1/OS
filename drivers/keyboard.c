@@ -5,5 +5,5 @@
 
 void keyboard_driver(registers_t regs) {
     uint8_t scancode = inb(0x60);
-    printk("teste", VIDEO_MEMORY + 120);
+    printk("keyboard");
 }

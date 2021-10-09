@@ -4,5 +4,5 @@
 #include "../lib/utils.h"
 
 uint8_t timer_driver(registers_t regs) {
-    printk("from timer", VIDEO_MEMORY);
+    print("from timer");
 }

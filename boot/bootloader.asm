@@ -24,12 +24,10 @@ enable_a20:
 %include "boot/disk.asm"
 
 [bits 32]
-%include "boot/screen.asm"
 %include "boot/registers.asm"
 
 start_pm:
     call set_registers
-    call clear_screen
     call KERNEL_LOCATION
     jmp $
 
