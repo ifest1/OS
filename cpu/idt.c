@@ -1,8 +1,8 @@
 #include "../include/idt.h"
 #include "../include/ports.h"
 #include "../include/screen.h"
-#include "../lib/print.h"
 #include "../include/pic.h"
+#include "../lib/print.h"
 
 idtr_t          idt_ptr;
 idt_entry_t     idt[256];
@@ -30,7 +30,6 @@ void set_idt_gate(uint16_t irq_id, uint32_t isr, uint16_t sel, uint8_t flags) {
 void init_idt() {
     idt_ptr.limit               = (uint16_t) 256 * sizeof(idt_entry_t) - 1;
     idt_ptr.base_address        = (uint32_t) & idt;
-
     set_idt_gate(0, (uint32_t) isr0, 0x08, 0x8E);
     set_idt_gate(1, (uint32_t) isr1, 0x08, 0x8E);
     set_idt_gate(2, (uint32_t) isr2, 0x08, 0x8E);
@@ -79,6 +78,7 @@ void init_idt() {
     set_idt_gate(45, (uint32_t) isr45, 0x08, 0x8E);
     set_idt_gate(46, (uint32_t) isr46, 0x08, 0x8E);
     set_idt_gate(47, (uint32_t) isr47, 0x08, 0x8E);
-
+    printk("IDT Gates loaded.");
     idt_flush();
+    printk("CPU IDT Pointer loaded.");
 }

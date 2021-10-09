@@ -4,6 +4,7 @@
 #ifndef KEYBOARD_H__
 #define KEYBOARD_H__
 
-void keyboard_driver(registers_t regs);
+
+void keyboard_handler(registers_t regs);
 
 #endif

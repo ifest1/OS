@@ -2,6 +2,7 @@
 #include "../include/screen.h"
 #include "../include/ports.h"
 
+/* From position get the character/cursor coordinates */
 uint8_t x(uint16_t pos) {
     return pos % VGA_WIDTH;
 }
@@ -10,10 +11,12 @@ uint8_t y(uint16_t pos) {
     return pos / VGA_WIDTH;
 }
 
+/* From x and y get position on VGA memory */
 uint16_t position(uint8_t x, uint8_t y) {
     return (uint16_t) y * VGA_WIDTH + x;
 }
 
+/* Cursor functions */
 void set_cursor(uint8_t x, uint8_t y) {
     uint16_t pos = position(x, y);
 	outb(0x3D4, 0x0F);
@@ -32,19 +35,17 @@ uint16_t get_cursor(void)
     return pos;
 }
 
-void write_char(unsigned char c, uint16_t clr) {
-    uint16_t cursor_pos = get_cursor();
-    uint8_t cursor_x = x(cursor_pos) + 1;
-    uint8_t cursor_y = y(cursor_pos);
-    write_char_at(cursor_pos, c, clr);
-    set_cursor(cursor_x, cursor_y);
+void newline_cursor() {
+    set_cursor(0, y(get_cursor()) + 1);
 }
 
-void write_char_at(uint16_t pos, unsigned char c, uint16_t clr) {
+/* Writes char at given position with bg and fg specified */
+void print_char(uint16_t pos, uint8_t c, uint16_t clr) {
     uint16_t *vga_mm = (uint16_t *) VIDEO_MEMORY + pos;
     *vga_mm = c | clr << 8;
 }
 
+/* Fill screen with specified color */
 void fill_screen(uint16_t clr) {
     uint16_t *vga_mm = (uint16_t *) VIDEO_MEMORY;
     for(int i = 0; i < SCREEN_SIZE; i++)

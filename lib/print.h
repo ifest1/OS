@@ -1,4 +1,4 @@
-#ifndef PRINTK_H__
-#define PRINTK_H__
+#ifndef PRINT_H__
+#define PRINT_H__
 void printk(char *str);
 #endif

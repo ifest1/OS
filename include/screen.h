@@ -19,14 +19,15 @@
 #define WHITE_ON_BLACK          ((uint8_t) (BLACK << 4) | (uint8_t) (LIGHT + BRIGHT))
 #define WHITE_ON_BLUE           ((uint8_t) (BLUE << 4)  | (uint8_t) (LIGHT + BRIGHT))
 
-void write_char_at(uint16_t pos, unsigned char c, uint16_t clr);
-void write_char(unsigned char c, uint16_t clr);
+void print_char(uint16_t pos, uint8_t c, uint16_t clr);
 
 uint8_t x(uint16_t pos);
 uint8_t y(uint16_t pos);
 
 uint16_t position(uint8_t x, uint8_t y);
+
 uint16_t get_cursor(void);
+void newline_cursor();
 void set_cursor(uint8_t x, uint8_t y);
 void fill_screen(uint16_t clr);
 #endif

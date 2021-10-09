@@ -1,14 +1,15 @@
+#include "../include/stdint.h"
 #include "../include/screen.h"
-#include "./print.h"
 
+/* Main print string kernel function */
 void printk(char *str) {
-    while(*str != 0)
-        write_char(*str++, WHITE_ON_BLUE);
-    set_cursor(0, y(get_cursor()) + 1);
-}
+    uint16_t cursor_pos = get_cursor();
+    uint8_t cursor_x = x(cursor_pos) + 1;
+    uint8_t cursor_y = y(cursor_pos);
 
-void print(char *str) {
-    uint16_t pos = 60;
-    while(*str != 0)
-        write_char_at(pos++, *str++, WHITE_ON_BLUE);
+    while(*str != 0) {
+        print_char(cursor_pos++, *str++, WHITE_ON_BLUE);
+        cursor_x++;
+    }
+    newline_cursor();
 }
