@@ -3,6 +3,7 @@
 start:
     call text_mode
     call load_kernel
+    call e820_mmap
     call enable_a20
     call switch_to_pm
     jmp CODE_SEG:start_pm
@@ -22,6 +23,7 @@ enable_a20:
 %include "boot/gdt.asm"
 %include "boot/pm.asm"
 %include "boot/disk.asm"
+%include "boot/mmap.asm"
 
 [bits 32]
 %include "boot/registers.asm"

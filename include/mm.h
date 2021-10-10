@@ -1,14 +1,18 @@
-#include "../include/stdint.h"
-
-#define ARM      1
-#define ARR      2
+#include "stdint.h"
+#ifndef MM_H__
+#define MM_H__
+#define MMAP_ENTRY_COUNT    0x5000
+#define MMAP_ENTRY          0x5004
+#define ARM                 1
+#define ARR                 2
 
 typedef struct {
-    uint16_t base_addr_l;
-    uint16_t base_addr_h;
-    uint16_t length_l;
-    uint16_t length_h;
+    uint32_t base_addr_l;
+    uint32_t base_addr_h;
+    uint32_t length_l;
+    uint32_t length_h;
     uint32_t type;
+    uint32_t acpi;
 } __attribute__((packed)) mmap_entry_t;
 
-// mmap_entry_t *mmap = (mmap_entry_t *) 0x1000;
+#endif

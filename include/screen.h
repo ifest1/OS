@@ -18,6 +18,7 @@
 
 #define WHITE_ON_BLACK          ((uint8_t) (BLACK << 4) | (uint8_t) (LIGHT + BRIGHT))
 #define WHITE_ON_BLUE           ((uint8_t) (BLUE << 4)  | (uint8_t) (LIGHT + BRIGHT))
+#define BLACK_ON_WHITE           ((uint8_t) (LIGHT << 4)  | (uint8_t) (BLACK))
 
 void print_char(uint16_t pos, uint8_t c, uint16_t clr);
 

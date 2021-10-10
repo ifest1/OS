@@ -3,6 +3,6 @@
 #include "../lib/utils.h"
 #include "../lib/print.h"
 
-uint8_t timer_handler(registers_t regs) {
+void timer_handler(registers_t regs) {
 
 }
