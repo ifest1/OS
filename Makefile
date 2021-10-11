@@ -1,5 +1,5 @@
 C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c lib/*.c)
-OBJ_FILES = $(C_SOURCES:.c=.o cpu/interrupt.o)
+OBJ_FILES = $(C_SOURCES:.c=.o cpu/interrupt.o boot/mmap.o)
 CFLAGS = -fno-pie -ffreestanding
 
 %.o: %.asm

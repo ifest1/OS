@@ -2,6 +2,7 @@
 #include "../include/ports.h"
 #include "../include/screen.h"
 #include "../include/pic.h"
+#include "../include/isr.h"
 #include "../lib/print.h"
 
 idtr_t          idt_ptr;

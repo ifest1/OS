@@ -24,7 +24,7 @@ void keyboard_handler(registers_t regs) {
     if (scancode <= 0x57) {
         if (scancode == BACKSPACE) {
             set_cursor(pos - 1);
-            print_char(pos - 1, ' ', WHITE_ON_BLUE);
+            print_char(pos - 1, ' ', BLACK_ON_WHITE);
         }
 
         if (scancode == ENTER) {
@@ -34,7 +34,7 @@ void keyboard_handler(registers_t regs) {
         c = KEYBOARD_SCANCODES[scancode];
 
         if (c != ' ') {
-            print_char(pos, c, WHITE_ON_BLUE);
+            print_char(pos, c, BLACK_ON_WHITE);
             set_cursor(pos + 1);
         }
     }

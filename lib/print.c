@@ -8,7 +8,7 @@ void printk(char *str) {
     uint8_t cursor_y = y(cursor_pos);
 
     while(*str != 0) {
-        print_char(cursor_pos++, *str++, WHITE_ON_BLUE);
+        print_char(cursor_pos++, *str++, BLACK_ON_WHITE);
         cursor_x++;
     }
     newline_cursor();
