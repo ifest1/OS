@@ -1,31 +1,33 @@
-C_SOURCES = $(wildcard kernel/*.c drivers/*.c cpu/*.c lib/*.c)
-OBJ_FILES = $(C_SOURCES:.c=.o cpu/interrupt.o boot/mmap.o)
-CFLAGS = -fno-pie -ffreestanding
+C_SOURCES 	= $(wildcard kernel/*.c drivers/*.c cpu/*.c lib/*.c)
+OBJ_FILES 	= $(C_SOURCES:.c=.o cpu/interrupt.o boot/mmap.o kernel/kernel_entry.o)
+CFLAGS 		= -fno-pie -ffreestanding -m32
+ASMFLAGS 	= -f elf32
+BINFLAGS	= -f bin -I '../../16bit/'
+LDFLAGS 	= -m elf_i386 -Ttext 0x1000 --oformat binary
+BINARIES	= boot/bootloader.bin kernel/kernel.bin
+IMAGE 		= os-image.bin
+CC 			= gcc
+ASM			= nasm
 
 %.o: %.asm
-	nasm $< -f elf32 -o $@
+	nasm $< ${ASMFLAGS} -o $@
 
 %.o: %.c
-	gcc -m32 ${CFLAGS} -c $< -o $@
+	${CC} ${CFLAGS} -c $< -o $@
 
 %.bin : %.asm
-	nasm $< -f bin -I '../../16bit/' -o $@
+	${ASM} $< ${BINFLAGS} -o $@
 
-os.img: boot/bootloader.bin kernel/kernel.bin
-	cat $^ > os-image.bin
+kernel/kernel.bin: ${OBJ_FILES}
+	ld -o $@ ${LDFLAGS} $^
 
-kernel/kernel.bin: kernel/kernel_entry.o ${OBJ_FILES}
-	ld -o $@ -m elf_i386 -Ttext 0x1000 $^ --oformat binary
+os.img: ${BINARIES}
+	cat $^ > ${IMAGE}
 
-run:
-	make clean
-	make build
+run: os.img
 	qemu-system-i386 -machine q35 -fda os-image.bin
 	make clean
 
-build: os.img
-
 clean:
-	rm -fr *.bin *.o *.img
-	rm -fr kernel/*.o boot/*.bin drivers/*.o cpu/*.o lib/*.o
+	rm -fr *.bin *.o *.img kernel/*.o boot/*.bin drivers/*.o cpu/*.o lib/*.o
 
