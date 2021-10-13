@@ -1,4 +1,4 @@
-SRCFILES 	= $(shell find $(PROJDIRS) -type f -name "*.c")
+SRCFILES 	= $(shell find -type f -name "*.c")
 LINKFILES	= cpu/arch/x86/interrupt.o boot/mmap.o kernel/kernel_entry.o
 OBJFILES 	= $(patsubst %.c,%.o,$(SRCFILES) $(LINKFILES))
 
