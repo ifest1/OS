@@ -1,9 +1,9 @@
-#include <idt.h>
-#include <ports.h>
-#include <screen.h>
-#include <pic.h>
-#include <isr.h>
-#include <print.h>
+#include <cpu/x86/idt.h>
+#include <cpu/x86/ports.h>
+#include <cpu/x86/pic.h>
+#include <cpu/x86/isr.h>
+#include <drivers/screen.h>
+#include <stdlib.h>
 
 idtr_t          idt_ptr;
 idt_entry_t     idt[256];

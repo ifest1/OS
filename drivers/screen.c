@@ -1,6 +1,6 @@
 #include <stdint.h>
-#include <screen.h>
-#include <ports.h>
+#include <cpu/x86/ports.h>
+#include <drivers/screen.h>
 
 /* From position get the character/cursor coordinates */
 uint8_t x(uint16_t pos) {

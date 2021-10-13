@@ -21,14 +21,11 @@
 #define WHITE_ON_BLUE           ((uint8_t) (BLUE << 4)  | (uint8_t) (LIGHT + BRIGHT))
 #define BLACK_ON_WHITE          ((uint8_t) (LIGHT << 4)  | (uint8_t) (BLACK))
 
-void print_char(uint16_t pos, uint8_t c, uint16_t clr);
-
 uint8_t x(uint16_t pos);
 uint8_t y(uint16_t pos);
-
 uint16_t position(uint8_t x, uint8_t y);
-
 uint16_t get_cursor(void);
+void print_char(uint16_t pos, uint8_t c, uint16_t clr);
 void newline_cursor();
 void set_cursor(uint16_t pos);
 void set_cursor_coordinates(uint8_t x, uint8_t y);

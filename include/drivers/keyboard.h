@@ -1,5 +1,5 @@
-#include <idt.h>
-#include <ports.h>
+#include <cpu/x86/idt.h>
+#include <cpu/x86/ports.h>
 
 #ifndef KEYBOARD_H__
 #define KEYBOARD_H__

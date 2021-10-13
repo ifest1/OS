@@ -1,6 +1,8 @@
 #include <stdint.h>
+
 #ifndef MM_H__
 #define MM_H__
+
 #define ARM                 1
 #define ARR                 2
 
@@ -13,5 +15,6 @@ typedef struct {
 extern uint8_t MMAP_ENTRY_COUNT;
 extern uint8_t MMAP_ENTRY;
 
+int mm_comp(mmap_entry_t *mm1, mmap_entry_t *mm2);
 void print_mmap();
 #endif

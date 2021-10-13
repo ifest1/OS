@@ -1,14 +1,18 @@
-#include <mm.h>
-#include <utils.h>
-#include <print.h>
+#include <cpu/x86/mm.h>
+#include <stdlib.h>
+
+int mm_comp(mmap_entry_t *mm1, mmap_entry_t *mm2) {
+    return (mm1->length < mm2->length);
+}
 
 void print_mmap() {
-    for (uint8_t i = 0; i < MMAP_ENTRY_COUNT; i++) {
-        mmap_entry_t *mm_entry = (mmap_entry_t *) &MMAP_ENTRY + i;
+    mmap_entry_t *mm = (mmap_entry_t *) &MMAP_ENTRY;
 
-        printk(itoa(mm_entry->base_addr, 16, 10));
-        printk(itoa(mm_entry->length, 16, 10));
-        printk(itoa(mm_entry->type, 16, 10));
+    ms(mm, 0, MMAP_ENTRY_COUNT - 1, mm_comp);
+
+    for (uint8_t i = 0; i < MMAP_ENTRY_COUNT; i++) {
+        printk(itoa(mm->length, 16, 10));
         printk("==============================");
+        mm = mm + i;
     }
 }

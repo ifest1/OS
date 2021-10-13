@@ -1,4 +1,4 @@
-#include <idt.h>
+#include <cpu/x86/idt.h>
 
 #ifndef TIMER_H__
 #define TIMER_H__

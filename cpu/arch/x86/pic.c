@@ -1,6 +1,6 @@
-#include <pic.h>
-#include <ports.h>
 #include <stdint.h>
+#include <cpu/x86/pic.h>
+#include <cpu/x86/ports.h>
 
 void init_pics() {
     // ICW1

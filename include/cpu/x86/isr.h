@@ -1,7 +1,9 @@
+#include <stdint.h>
+#include <cpu/x86/idt.h>
+
 #ifndef ISR_H__
 #define ISR_H__
-#include <stdint.h>
-#include <idt.h>
+
 typedef void (*isr_t)(registers_t);
 void irq_handler(registers_t regs);
 void load_irq_handler(uint8_t irq_no, isr_t handler);

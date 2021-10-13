@@ -1,10 +1,10 @@
 
-#include <screen.h>
-#include <keyboard.h>
-#include <timer.h>
-#include <idt.h>
-#include <pic.h>
-#include <isr.h>
+#include <drivers/screen.h>
+#include <drivers/keyboard.h>
+#include <drivers/timer.h>
+#include <cpu/x86/idt.h>
+#include <cpu/x86/pic.h>
+#include <cpu/x86/isr.h>
 
 void x86_init() {
     fill_screen(BLACK_ON_WHITE);

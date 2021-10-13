@@ -1,5 +1,5 @@
-#include <isr.h>
-#include <pic.h>
+#include <cpu/x86/isr.h>
+#include <cpu/x86/pic.h>
 
 isr_t           interrupt_handlers[256];
 
