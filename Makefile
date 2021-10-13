@@ -1,5 +1,6 @@
-C_SOURCES 	= $(wildcard kernel/*.c drivers/*.c cpu/arch/x86/*.c lib/*.c)
-OBJ_FILES 	= $(C_SOURCES:.c=.o cpu/arch/x86/interrupt.o boot/mmap.o kernel/kernel_entry.o)
+SRCFILES 	= $(shell find $(PROJDIRS) -type f -name "*.c")
+LINKFILES	= cpu/arch/x86/interrupt.o boot/mmap.o kernel/kernel_entry.o
+OBJFILES 	= $(patsubst %.c,%.o,$(SRCFILES) $(LINKFILES))
 
 CFLAGS 		= -fno-pie -ffreestanding -m32 -I include
 ASMFLAGS 	= -f elf32
@@ -24,7 +25,7 @@ QEMU		= qemu-system-i386
 %.bin: %.asm
 	${ASM} $< ${BINFLAGS} -o $@
 
-${word 2, $(BINARIES)}: ${OBJ_FILES}
+${word 2, $(BINARIES)}: ${OBJFILES}
 	${LINKER} -o $@ ${LDFLAGS} $^
 
 ${IMAGE}: ${BINARIES}
@@ -35,5 +36,5 @@ build: ${IMAGE}
 	make clean
 
 clean:
-	rm -fr ${BINARIES} ${OBJ_FILES}
+	rm -fr ${BINARIES} ${OBJFILES}
 
