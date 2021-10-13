@@ -1,6 +1,6 @@
-#include "../include/pic.h"
-#include "../include/ports.h"
-#include "../include/stdint.h"
+#include <pic.h>
+#include <ports.h>
+#include <stdint.h>
 
 void init_pics() {
     // ICW1

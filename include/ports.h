@@ -1,4 +1,4 @@
-#include "./stdint.h"
+#include <stdint.h>
 
 #ifndef PORTS_H__
 #define PORTS_H__

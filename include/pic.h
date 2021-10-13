@@ -1,4 +1,5 @@
-#include "stdint.h"
+#include <stdint.h>
+
 #ifndef PIC_H__
 #define PIC_H__
 #define PIC1_CMD                0x20        // Control port PIC1

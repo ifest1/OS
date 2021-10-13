@@ -1,5 +1,5 @@
-#include "../include/ports.h"
-#include "../include/stdint.h"
+#include <ports.h>
+#include <stdint.h>
 /*
 Source: https://wiki.osdev.org/Inline_Assembly
 In the constraint, 'a' refers to EAX, 'b' to EBX, 'c' to ECX,

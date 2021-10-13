@@ -1,4 +1,4 @@
-#include "stdint.h"
+#include <stdint.h>
 
 #ifndef IDT_H__
 #define IDT_H__

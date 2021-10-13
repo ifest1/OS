@@ -1,4 +1,4 @@
-#include "./utils.h"
+#include <utils.h>
 
 char *itoa(int n, int base, int size) {
     char str[size], *result, *ptr_bg, *ptr;

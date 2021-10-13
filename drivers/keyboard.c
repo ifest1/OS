@@ -1,8 +1,10 @@
-#include "../include/keyboard.h"
-#include "../include/ports.h"
-#include "../include/screen.h"
-#include "../lib/print.h"
-#include "../lib/utils.h"
+#include <keyboard.h>
+#include <ports.h>
+#include <screen.h>
+#include <print.h>
+#include <utils.h>
+#include <stdint.h>
+#include <idt.h>
 
 const char KEYBOARD_SCANCODES[0x57] = {
     ' ', ' ', '1', '2', '3', '4',

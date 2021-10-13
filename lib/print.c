@@ -1,5 +1,5 @@
-#include "../include/stdint.h"
-#include "../include/screen.h"
+#include <stdint.h>
+#include <screen.h>
 
 /* Main print string kernel function */
 void printk(char *str) {

@@ -1,4 +1,4 @@
-#include "stdint.h"
+#include <stdint.h>
 #ifndef MM_H__
 #define MM_H__
 #define ARM                 1
@@ -13,6 +13,5 @@ typedef struct {
 extern uint8_t MMAP_ENTRY_COUNT;
 extern uint8_t MMAP_ENTRY;
 
-void print_mmap(mmap_entry_t *mmap);
-mmap_entry_t *order_mmap(mmap_entry_t *mmap);
+void print_mmap();
 #endif

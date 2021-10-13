@@ -1,5 +1,5 @@
-#include "../include/isr.h"
-#include "../include/pic.h"
+#include <isr.h>
+#include <pic.h>
 
 isr_t           interrupt_handlers[256];
 
