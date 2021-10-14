@@ -79,7 +79,7 @@ void init_idt() {
     set_idt_gate(45, (uint32_t) isr45, 0x08, 0x8E);
     set_idt_gate(46, (uint32_t) isr46, 0x08, 0x8E);
     set_idt_gate(47, (uint32_t) isr47, 0x08, 0x8E);
-    printk("IDT Gates loaded.");
+    printk("IDT Gates loaded.", 1);
     idt_flush();
-    printk("CPU IDT Pointer loaded.");
+    printk("CPU IDT Pointer loaded.", 1);
 }

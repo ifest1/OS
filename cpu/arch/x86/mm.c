@@ -2,17 +2,46 @@
 #include <stdlib.h>
 
 int mm_comp(mmap_entry_t *mm1, mmap_entry_t *mm2) {
-    return (mm1->length < mm2->length);
+    return mm1->length < mm2->length;
 }
 
 void print_mmap() {
     mmap_entry_t *mm = (mmap_entry_t *) &MMAP_ENTRY;
 
-    ms(mm, 0, MMAP_ENTRY_COUNT - 1, mm_comp);
-
-    for (uint8_t i = 0; i < MMAP_ENTRY_COUNT; i++) {
-        printk(itoa(mm->length, 16, 10));
-        printk("==============================");
-        mm = mm + i;
-    }
+    // ms(mm, 0, MMAP_ENTRY_COUNT - 1, mm_comp);
+    printk(itoa(mm[0].length, 16, 10), 1);
+    mm++;
+    printk(itoa(mm[0].length, 16, 10), 1);
+    mm++;
+    printk(itoa(mm[0].length, 16, 10), 1);
+    // for (uint8_t i = 0; i < MMAP_ENTRY_COUNT; i++) {
+    //     mm = (mmap_entry_t *) &MMAP_ENTRY + i;
+    //     printk(itoa(mm->length, 16, 10), 1);
+    //     // printk(itoa(mm->base_addr, 16, 10), 1);
+    //     // printk(itoa(mm->type, 16, 10), 1);
+    //     printk("==============================", 1);
+    // }
 }
+
+/*
+0x5000:	0x00000008	0x00000000	0x00000000	0x0009fc00
+0x5010:	0x00000000	0x00000001	0x00000000	0x0009fc00
+0x5020:	0x00000000	0x00000400	0x00000000	0x00000002
+0x5030:	0x00000000	0x000f0000	0x00000000	0x00010000
+0x5040:	0x00000000	0x00000002	0x00000000	0x00100000
+0x5050:	0x00000000	0x07edf000	0x00000000	0x00000001
+0x5060:	0x00000000	0x07fdf000	0x00000000	0x00021000
+0x5070:	0x00000000	0x00000002	0x00000000	0xb0000000
+0x5080:	0x00000000	0x10000000	0x00000000	0x00000002
+0x5090:	0x00000000	0xfed1c000	0x00000000	0x00004000
+0x50a0:	0x00000000	0x00000002	0x00000000	0xfffc0000
+0x50b0:	0x00000000	0x00040000	0x00000000	0x00000002
+0x50c0:	0x00000000	0x00000000	0x00000000	0x00000000
+0x50d0:	0x00000000	0x00000000	0x00000000	0x00000000
+0x50e0:	0x00000000	0x00000000	0x00000000	0x00000000
+0x50f0:	0x00000000	0x00000000	0x00000000	0x00000000
+0x5100:	0x00000000	0x00000000	0x00000000	0x00000000
+0x5110:	0x00000000	0x00000000	0x00000000	0x00000000
+0x5120:	0x00000000	0x00000000	0x00000000	0x00000000
+0x5130:	0x00000000	0x00000000	0x00000000	0x00000000
+*/

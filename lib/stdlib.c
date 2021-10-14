@@ -3,7 +3,7 @@
 #include <drivers/screen.h>
 
 /* Main print string kernel function */
-void printk(char *str) {
+void printk(char *str, bool nl) {
     uint16_t cursor_pos = get_cursor();
     uint8_t cursor_x = x(cursor_pos) + 1;
     uint8_t cursor_y = y(cursor_pos);
@@ -12,33 +12,58 @@ void printk(char *str) {
         print_char(cursor_pos++, *str++, BLACK_ON_WHITE);
         cursor_x++;
     }
-    newline_cursor();
+    if (nl) {
+        newline_cursor();
+    }
+    else {
+        set_cursor(cursor_pos);
+    }
 }
 
-char *itoa(int n, int base, int size) {
-    char str[size], *result, *ptr_bg, *ptr;
-    result = ptr = str;
-    if (n < 0)
-        *ptr++ = '-';
+void reverse(char *str, int size) {
+    int i = 0;
+    int j = size - 1;
+    while(i <= j) {
+        char tmp = str[j];
+        str[j] = str[i];
+        str[i] = tmp;
+        i++;
+        j--;
+    }
+}
 
-    ptr_bg = ptr;
+char *itoa(long int n, int base, char *str) {
+    int i = 0;
+    int rem = 0;
 
-    while(n) {
-        *ptr++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz"[35 + n % base];
+    if (n == 0) {
+        str[i++] = '0';
+        str[i] = '\0';
+        return str;
+    }
+
+    if (n  < 0 && base == 10)
+        str[i] = '-';
+
+    while (n != 0) {
+        rem = n % base;
+        if (rem > 9) {
+            str[i++] = (rem-10) + 'A';
+        }
+        else {
+            str[i++] = rem + '0';
+        }
         n /= base;
     }
 
-    *ptr-- = '\0';
+    str[i] = '\0';
 
-    while(ptr_bg < ptr) {
-        char tmp = *ptr_bg;
-        *ptr_bg++ = *ptr;
-        *ptr-- = tmp;
-    }
+    reverse(str, i);
 
-    return result;
+    return str;
+
 }
-
+/* comparator must receive variable with different type*/
 void merge(int *a, int b, int m, int e, int (*c)(int v1, int v2)) {
     int l, r, i;
     int l1 = m - b + 1;
@@ -87,4 +112,8 @@ void ms(int *n, int b, int e, int (*c)(int v1, int v2)) {
         ms(n, m+1, e, c);
         merge(n, b, m, e, c);
     }
+}
+
+int comp(int a, int b) {
+    return a < b;
 }

@@ -4,6 +4,5 @@
 
 void main() {
     x86_init();
-    int a[10] = {15,8,7,10,3,2,4,12,13,9};
     print_mmap();
 }
