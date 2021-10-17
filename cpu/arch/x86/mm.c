@@ -5,22 +5,19 @@ int mm_comp(mmap_entry_t *mm1, mmap_entry_t *mm2) {
     return mm1->length < mm2->length;
 }
 
-void print_mmap() {
+void print_mmap(void) {
     mmap_entry_t *mm = (mmap_entry_t *) &MMAP_ENTRY;
-
-    // ms(mm, 0, MMAP_ENTRY_COUNT - 1, mm_comp);
-    printk(itoa(mm[0].length, 16, 10), 1);
-    mm++;
-    printk(itoa(mm[0].length, 16, 10), 1);
-    mm++;
-    printk(itoa(mm[0].length, 16, 10), 1);
-    // for (uint8_t i = 0; i < MMAP_ENTRY_COUNT; i++) {
-    //     mm = (mmap_entry_t *) &MMAP_ENTRY + i;
-    //     printk(itoa(mm->length, 16, 10), 1);
-    //     // printk(itoa(mm->base_addr, 16, 10), 1);
-    //     // printk(itoa(mm->type, 16, 10), 1);
-    //     printk("==============================", 1);
-    // }
+    for (uint8_t i = 0; i < MMAP_ENTRY_COUNT; i++) {
+        mm = (mmap_entry_t *) &MMAP_ENTRY + i;
+        // printk(itoa(mm->length, 16, 10), 1);
+        printk("Base address: ", 0);
+        printk(itoa(mm->base_addr, 16, 10), 0);
+        printk("       Memory type: ", 0);
+        printk(itoa(mm->type, 16, 10), 0);
+        printk("       Length: ", 0);
+        printk(itoa(mm->length, 16, 10), 1);
+        printk(" ", 1);
+    }
 }
 
 /*
