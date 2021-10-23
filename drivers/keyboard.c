@@ -22,12 +22,13 @@ void keyboard_handler(registers_t regs) {
     char c;
     uint8_t scancode = inb(0x60);
     uint16_t pos = get_cursor();
+    
     if (scancode <= 0x57) {
         if (scancode == BACKSPACE) {
             set_cursor(pos - 1);
             print_char(pos - 1, ' ', BLACK_ON_WHITE);
         }
-
+        
         if (scancode == ENTER) {
             newline_cursor();
         }

@@ -20,21 +20,12 @@ void printk(char *str, bool nl) {
     }
 }
 
-void reverse(char *str, int size) {
+char *itoa(int n, int base, char *str) {
     int i = 0;
-    int j = size - 1;
-    while(i <= j) {
-        char tmp = str[j];
-        str[j] = str[i];
-        str[i] = tmp;
-        i++;
-        j--;
-    }
-}
-
-char *itoa(long int n, int base, char *str) {
-    int i = 0;
-    int rem = 0;
+    int j = 0;
+    int k = 0;
+    char temp[32];
+    char digits[] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
 
     if (n == 0) {
         str[i++] = '0';
@@ -42,28 +33,37 @@ char *itoa(long int n, int base, char *str) {
         return str;
     }
 
-    if (n  < 0 && base == 10)
+    if (n < 0 && base == 10)
         str[i] = '-';
 
     while (n != 0) {
-        rem = n % base;
-        if (rem > 9) {
-            str[i++] = (rem-10) + 'A';
-        }
-        else {
-            str[i++] = rem + '0';
-        }
+        temp[i++] = digits[n % base];
         n /= base;
     }
 
     str[i] = '\0';
-
-    reverse(str, i);
+    k = i--;
+    for (j = 0; j < k; i--, j++)
+        str[j] = temp[i];
 
     return str;
 
 }
-/* comparator must receive variable with different type*/
+
+void memcpy(void *dest, void *src, int size) {
+    char *d = (char *) dest;
+    char *s = (char *) src;
+    for(int i = 0; i < size; i++)
+        *d++ = *s++;
+}
+
+void memset(void *str, char c, int n) {
+    char *s = (char *) str;
+    for(int i = 0; i < n; i++)
+        *s++ = c;
+}
+
+/* comparator must receive variable with different type */
 void merge(int *a, int b, int m, int e, int (*c)(int v1, int v2)) {
     int l, r, i;
     int l1 = m - b + 1;
@@ -117,3 +117,5 @@ void ms(int *n, int b, int e, int (*c)(int v1, int v2)) {
 int comp(int a, int b) {
     return a < b;
 }
+
+

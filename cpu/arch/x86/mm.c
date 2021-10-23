@@ -6,39 +6,39 @@ int mm_comp(mmap_entry_t *mm1, mmap_entry_t *mm2) {
 }
 
 void print_mmap(void) {
+    char base_addr_l[20];
+    char base_addr_h[20];
+    char length[20];
+    char type[20];
     mmap_entry_t *mm = (mmap_entry_t *) &MMAP_ENTRY;
+    printk("| Address | Length | Type |", 1);
     for (uint8_t i = 0; i < MMAP_ENTRY_COUNT; i++) {
         mm = (mmap_entry_t *) &MMAP_ENTRY + i;
-        // printk(itoa(mm->length, 16, 10), 1);
-        printk("Base address: ", 0);
-        printk(itoa(mm->base_addr, 16, 10), 0);
-        printk("       Memory type: ", 0);
-        printk(itoa(mm->type, 16, 10), 0);
-        printk("       Length: ", 0);
-        printk(itoa(mm->length, 16, 10), 1);
-        printk(" ", 1);
+        uint32_t addr_l = (uint32_t) mm->address_l;
+        uint32_t addr_h = (uint32_t) mm->address_h;
+        itoa(addr_h, 16, base_addr_h);
+        itoa(addr_l, 16, base_addr_l);
+        itoa(mm->length, 16, length);
+        itoa(mm->type, 16, type);
+        printk(" ", 0);
+        printk(base_addr_h, 0);
+        printk(" ", 0);
+        printk(base_addr_l, 0);
+        printk(" ", 0);
+        printk(length, 0);
+        printk(" ", 0);
+        printk(type, 1);
+        printk(" ", 0);
     }
 }
 
-/*
-0x5000:	0x00000008	0x00000000	0x00000000	0x0009fc00
-0x5010:	0x00000000	0x00000001	0x00000000	0x0009fc00
-0x5020:	0x00000000	0x00000400	0x00000000	0x00000002
-0x5030:	0x00000000	0x000f0000	0x00000000	0x00010000
-0x5040:	0x00000000	0x00000002	0x00000000	0x00100000
-0x5050:	0x00000000	0x07edf000	0x00000000	0x00000001
-0x5060:	0x00000000	0x07fdf000	0x00000000	0x00021000
-0x5070:	0x00000000	0x00000002	0x00000000	0xb0000000
-0x5080:	0x00000000	0x10000000	0x00000000	0x00000002
-0x5090:	0x00000000	0xfed1c000	0x00000000	0x00004000
-0x50a0:	0x00000000	0x00000002	0x00000000	0xfffc0000
-0x50b0:	0x00000000	0x00040000	0x00000000	0x00000002
-0x50c0:	0x00000000	0x00000000	0x00000000	0x00000000
-0x50d0:	0x00000000	0x00000000	0x00000000	0x00000000
-0x50e0:	0x00000000	0x00000000	0x00000000	0x00000000
-0x50f0:	0x00000000	0x00000000	0x00000000	0x00000000
-0x5100:	0x00000000	0x00000000	0x00000000	0x00000000
-0x5110:	0x00000000	0x00000000	0x00000000	0x00000000
-0x5120:	0x00000000	0x00000000	0x00000000	0x00000000
-0x5130:	0x00000000	0x00000000	0x00000000	0x00000000
-*/
+int get_avail_phys_mem() {
+    int avail_mm;
+    mmap_entry_t *mm = (mmap_entry_t *) &MMAP_ENTRY;
+    for (uint8_t i = 0; i < MMAP_ENTRY_COUNT; i++) {
+        mm = (mmap_entry_t *) &MMAP_ENTRY + i;
+        if (mm->type == 1) avail_mm += mm->length; 
+    }
+    return avail_mm;
+}
+

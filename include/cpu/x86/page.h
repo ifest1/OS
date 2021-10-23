@@ -2,10 +2,10 @@
 #ifndef PAGE_H__
 #define PAGE_H__
 
-#define PAGE_TABLES_BASE_LOC                    0x00100000
-#define PAGE_DIR_ENTRY_SIZE                     1024
-#define PAGE_ENTRY_SIZE                         1024
-#define PAGES_TOTAL_SIZE                        4096
+#define PAGE_TABLES_LOCATION                    0x00100000
+#define PAGE_DIR_NENTRIES                       1024
+#define PAGE_NENTRIES                           1024
+#define PAGE_SIZE                               4096
 
 #define PRESENT                                 1
 #define RW                                      2
@@ -19,7 +19,7 @@
 
 typedef uint32_t                                pg_t;
 
-pg_t *pgdir_table;;
+pg_t *pgdir_table;
 pg_t *first_pg_table;
 
 void init_pgdir_entries(void);
