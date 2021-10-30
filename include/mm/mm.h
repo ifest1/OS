@@ -7,8 +7,7 @@
 #define ARR                 2
 
 typedef struct {
-    uint32_t                address_l;
-    uint32_t                address_h;
+    uint64_t                address;
     uint64_t                length;
     uint64_t                type;
 } __attribute__((packed)) mmap_entry_t;
@@ -16,9 +15,9 @@ typedef struct {
 extern uint8_t              MMAP_ENTRY_COUNT;
 extern uint8_t              MMAP_ENTRY;
 
-//extern uint32_t             AVAILABLE_PHYS_MEM;
+mmap_entry_t *usable_memory[10];
+int available_mm;
 
-int mm_comp(mmap_entry_t *mm1, mmap_entry_t *mm2);
-int get_avail_phys_mem();
+void set_usable_mm();
 void print_mmap(void);
 #endif

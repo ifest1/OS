@@ -1,4 +1,4 @@
-#include <cpu/x86/page.h>
+#include <mm/page.h>
 
 void init_pgdir_entries(void) {
     pgdir_table = (pg_t *) PAGE_TABLES_LOCATION;

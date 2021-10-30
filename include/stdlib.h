@@ -1,7 +1,9 @@
-#ifndef UTILS_H__
-#define UTILS_H__
-#define MAX_STR_ITOA_SIZE 20
 #include <stdint.h>
+
+#ifndef STDLIB_H__
+#define STDLIB_H__
+#define MAX_STR_ITOA_SIZE 20
+#define NULL ( (void *) 0)
 
 char *itoa(int n, int base, char *str);
 void memcpy(void *dest, void *src, int size);
