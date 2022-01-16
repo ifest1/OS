@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <mm/mm.h>
 #include <mm/page.h>
-#include <mm/buddy_alloc.h>
+#include <mm/alloc.h>
 #include <cpu/x86/init.h>
 
 void main() {

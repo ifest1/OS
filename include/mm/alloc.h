@@ -12,12 +12,9 @@ struct entry {
 };
 typedef struct entry block;
 
-int deallocated;
+int free_space;
 int initialized;
 void *memory_start;
-
-void _init_memory();
-uint32_t _level_from_size(uint32_t size);
 
 block *free_lists[MAX_LVLS];
 
