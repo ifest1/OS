@@ -28,7 +28,7 @@ void set_idt_gate(uint16_t irq_id, uint32_t isr, uint16_t sel, uint8_t flags) {
     idt[irq_id].type            = flags;
 }
 
-void init_idt() {
+void idt_init() {
     idt_ptr.limit               = (uint16_t) 256 * sizeof(idt_entry_t) - 1;
     idt_ptr.base_address        = (uint32_t) & idt;
     set_idt_gate(0, (uint32_t) isr0, 0x08, 0x8E);
@@ -64,6 +64,9 @@ void init_idt() {
     set_idt_gate(30, (uint32_t) isr30, 0x08, 0x8E);
     set_idt_gate(31, (uint32_t) isr31, 0x08, 0x8E);
     set_idt_gate(32, (uint32_t) isr32, 0x08, 0x8E);
+
+    init_pics();
+
     set_idt_gate(33, (uint32_t) isr33, 0x08, 0x8E);
     set_idt_gate(34, (uint32_t) isr34, 0x08, 0x8E);
     set_idt_gate(35, (uint32_t) isr35, 0x08, 0x8E);

@@ -1,7 +1,12 @@
 {
   "files.associations": {
     "sstream": "c",
-    "string_view": "c"
+    "string_view": "c",
+    "page.h": "c",
+    "keyboard.h": "c",
+    "isr.h": "c",
+    "screen.h": "c",
+    "timer.h": "c"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }

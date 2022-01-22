@@ -29,6 +29,10 @@ void set_cursor_coordinates(uint8_t x, uint8_t y) {
     set_cursor(pos);
 }
 
+void reset_cursor() {
+    set_cursor(0);
+}
+
 uint16_t get_cursor(void)
 {
     uint16_t pos = 0;

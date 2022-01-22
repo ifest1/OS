@@ -1,1 +1,4 @@
-os-image.bin
+.vscode
+os.bin
+System.map
+*.o

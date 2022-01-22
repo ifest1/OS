@@ -28,6 +28,7 @@ uint16_t get_cursor(void);
 void print_char(uint16_t pos, uint8_t c, uint16_t clr);
 void newline_cursor();
 void set_cursor(uint16_t pos);
+void reset_cursor();
 void set_cursor_coordinates(uint8_t x, uint8_t y);
 void fill_screen(uint16_t clr);
 #endif

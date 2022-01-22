@@ -54,7 +54,7 @@ typedef struct registers
     uint32_t                 ss;
 } registers_t;
 
-void init_idt();
+void idt_init();
 void load_isr(uint16_t irq_id, uint32_t isr);
 void enable_interrupts();
 void disable_interrupts();

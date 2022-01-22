@@ -13,7 +13,6 @@
 #define PWT                                     8
 #define PCD                                     16
 #define ACCESSED                                32
-#define PAGE_SIZE                               64
 #define GLOBAL                                  128
 #define PAT                                     256
 

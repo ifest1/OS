@@ -1,5 +1,6 @@
 #include <cpu/x86/isr.h>
 #include <cpu/x86/pic.h>
+#include <stdlib.h>
 
 isr_t           interrupt_handlers[256];
 
@@ -13,4 +14,5 @@ void irq_handler(registers_t regs) {
 
 void load_irq_handler(uint8_t irq_no, isr_t handler) {
     interrupt_handlers[irq_no] = handler;
+    printk("loaded interrupt handler", 1);
 }

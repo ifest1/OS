@@ -1,20 +1,21 @@
-SRCFILES 	= $(shell find -type f -name "*.c")
-LINKFILES	= cpu/arch/x86/interrupt.o boot/mmap.o kernel/kernel_entry.o
-OBJFILES 	= $(patsubst %.c,%.o,$(SRCFILES) $(LINKFILES))
+IMAGE			= kernel/kernel.bin
+OS 				= os.bin
+SRCFILES 		= $(shell find -type f -name "*.c")
+LINKFILES		= cpu/arch/x86/i386.o
+OBJFILES 		= $(patsubst %.c,%.o,$(SRCFILES) $(LINKFILES))
 
-CFLAGS 		= -fno-pie -ffreestanding -m32 -I include
-ASMFLAGS 	= -f elf32
-BINFLAGS	= -f bin -I '../../16bit/'
-LDFLAGS 	= -m elf_i386 -Ttext 0x1000 --oformat binary
-QEMUFLAGS	= -machine q35 -fda
+CFLAGS 			= -Wall -Wextra -std=c99 -m32 -nostdlib -fno-builtin \
+		 		  -ffreestanding -fno-pie -I include
+ASMFLAGS 		= -f elf32
+LDFLAGS 		= -g -n -melf_i386 -T link.ld -Map System.map
+QEMUFLAGS		= -kernel ${IMAGE}
+LINKFILE		= link.ld
 
-BINARIES	= boot/bootloader.bin kernel/kernel.bin
-IMAGE 		= os-image.bin
-
-CC 			= gcc
-ASM			= nasm
-LINKER		= ld
-QEMU		= qemu-system-i386
+CC 				= gcc
+ASM				= nasm
+LD				= ld
+QEMU			= qemu-system-i386
+GDB				= gdb
 
 %.o: %.c
 	${CC} ${CFLAGS} -c $< -o $@
@@ -25,16 +26,20 @@ QEMU		= qemu-system-i386
 %.bin: %.asm
 	${ASM} $< ${BINFLAGS} -o $@
 
-${word 2, $(BINARIES)}: ${OBJFILES}
-	${LINKER} -o $@ ${LDFLAGS} $^
-
-${IMAGE}: ${BINARIES}
-	cat $^ > ${IMAGE}
+${IMAGE}: ${OBJFILES}
+	${LD} -o $@ ${LDFLAGS} $^
 
 build: ${IMAGE}
-	${QEMU} ${QEMUFLAGS} ${IMAGE}
-	make clean
+	${CC} -T ${LINKFILE} -o ${OS} ${CFLAGS} ${OBJFILES}
+
+iso: build
+	mkdir -p isodir/boot/grub
+	cp ${OS} isodir/boot/${OS}
+	cp grub.cfg isodir/boot/grub/grub.cfg
+	grub-mkrescue -o os.iso isodir
+
+run:
+	${QEMU} ${QEMUFLAGS} ${OS}
 
 clean:
-	rm -fr ${BINARIES} ${OBJFILES}
-
+	rm -fr ${KERNEL} ${OS} ${OBJFILES}

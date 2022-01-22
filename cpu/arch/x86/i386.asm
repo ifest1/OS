@@ -1,9 +1,55 @@
+[BITS 32]
 [extern irq_handler]
+MULTIBOOT_PAGE_ALIGN	      equ 1<<0
+MULTIBOOT_MEMORY_INFO	      equ 1<<1
+MULTIBOOT_HEADER_MAGIC	    equ 0x1BADB002
+MULTIBOOT_HEADER_FLAGS	    equ MULTIBOOT_PAGE_ALIGN | MULTIBOOT_MEMORY_INFO
+CHECKSUM                    equ -(MULTIBOOT_HEADER_MAGIC + MULTIBOOT_HEADER_FLAGS)
+
+
+section .multiboot
+    align 4
+    dd MULTIBOOT_HEADER_MAGIC
+    dd MULTIBOOT_HEADER_FLAGS
+    dd CHECKSUM
+
+
+section .bss
+	align 8
+  stack_bottom:
+	  resb 16384
+  stack_top:
+
+
+section .text:
+  global start:function (start.end - start)
+  start:
+	  mov esp, stack_top
+	  extern main
+	  call main
+    sti
+
+.hang:
+	hlt
+	jmp .hang
+
+.end:
+
+GLOBAL gdt_flush
+EXTERN gdt_p
+gdt_flush:
+    lgdt[gdt_p]
+    mov ax, 0x10
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    mov ss, ax
+    ret
 
 %macro ISR_NOERRCODE 1
   [GLOBAL isr%1]
   isr%1:
-    cli
     push byte 0
     push byte %1
     jmp 0x08:isr_common_stub
@@ -12,7 +58,6 @@
 %macro ISR_ERRCODE 1
   [GLOBAL isr%1]
   isr%1:
-    cli
     push byte %1
     jmp 0x08:isr_common_stub
 %endmacro
@@ -20,7 +65,6 @@
 %macro ISR_DEVICES 2
   [GLOBAL isr%2]
   isr%2:
-    cli
     push byte %1
     push byte %2
     jmp 0x08:isr_common_stub

@@ -6,5 +6,5 @@
 #define BACKSPACE   0x0E
 #define ENTER       0x1C
 void keyboard_handler(registers_t regs);
-
+void keyboard_install();
 #endif

@@ -6,7 +6,6 @@
 void printk(char *str, bool nl) {
     uint16_t cursor_pos = get_cursor();
     uint8_t cursor_x = x(cursor_pos) + 1;
-    uint8_t cursor_y = y(cursor_pos);
 
     while(*str != 0) {
         print_char(cursor_pos++, *str++, BLACK_ON_WHITE);
@@ -65,7 +64,7 @@ void memset(void *str, char c, int n) {
 
 /* comparator must receive variable with different type */
 void merge(int *a, int b, int m, int e, int (*c)(int v1, int v2)) {
-    int l, r, i;
+    int l, r;
     int l1 = m - b + 1;
     int l2 = e - m;
     int t1[l1], t2[l2];
