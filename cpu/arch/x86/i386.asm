@@ -25,6 +25,8 @@ section .text:
   global start:function (start.end - start)
   start:
 	  mov esp, stack_top
+    push eax
+    push ebx
 	  extern main
 	  call main
     sti

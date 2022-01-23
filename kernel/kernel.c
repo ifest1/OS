@@ -4,10 +4,18 @@
 #include <mm/alloc.h>
 #include <cpu/x86/init.h>
 
-void main() {
+void main(mboot_info_t *mboot_info, uint32_t magic) {
     // void *blk1, *blk2, *blk3;
-
     x86_init();
+    char buf[10];
+    mmap_entry_t *entry = mboot_info->mmap_addr;
+
+    for (int i = 0; i < mboot_info->mmap_length; i++) {
+        entry = entry + 1;
+        printk(itoa(entry->base_addr_high, 16, buf), 0);
+        printk(itoa(entry->base_addr_low, 16, buf), 1);
+    }
+    // printk(itoa(magic, 16, buf), 1);
     // init_pgdir_entries();
     // init_first_pg_table();
     // set_usable_mm();
