@@ -4,7 +4,9 @@
 
 void _init_memory() {
     free_space = MAX_BLK_SIZE;
-    memory_start = (block *) usable_memory[1]->base_addr_low;
+    memory_start = (block *) ((void *) usable_memory[0]->base_addr_low);
+    char buf[10];
+    memset(memory_start, 0, MAX_BLK_SIZE);
     memory_start->size = free_space;
     free_lists[0] = memory_start;
     initialized = 1;
@@ -24,10 +26,8 @@ void _insert_freelist_head(block *blk, uint32_t level) {
 
 block *_pop_freelist_head(uint32_t level) {
     block *blk;
-    if (free_lists[level] != NULL) {
-        blk = free_lists[level];
-        free_lists[level] = blk->next;
-    }
+    blk = free_lists[level];
+    free_lists[level] = blk->next;
     return blk;
 }
 
@@ -75,13 +75,11 @@ void *alloc(uint32_t size) {
         return NULL;
     }
 
-    for (level = _level_from_size(size); free_lists[level] == NULL; level--);
+    for (level = _level_from_size(size); free_lists[level] == NULL && level > 0; level--);
 
     for (;BLOCK_SIZE_AT_LVL(level) > size; level++) {
-        block *blk = free_lists[level];
+        block *blk = _pop_freelist_head(level);
         block *buddy = (block *) (((void *) blk) + sizeof(block) + BLOCK_SIZE_AT_LVL(level + 1));
-
-        _pop_freelist_head(level);
         _insert_freelist_head(buddy, level + 1);
         _insert_freelist_head(blk, level + 1);
     }

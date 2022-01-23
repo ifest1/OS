@@ -24,7 +24,15 @@ void set_usable_mm(mmap_entry_t *entry, uint32_t size) {
     while (i < size && entry->type != 0) {
         if (entry->type == 1) {
             usable_memory[i] = entry;
-            printk(itoa(i, 10, buf), 1);
+            itoa(entry->type, 10, buf);
+            printk("Type: ", 0);
+            printk(buf, 0);
+            printk(" ", 0);
+            itoa(entry->base_addr_high, 16, buf);
+            printk("Address: ", 0);
+            printk(buf, 0);
+            itoa(entry->base_addr_low, 16, buf);
+            printk(buf, 1);
             i++;
         }
         entry++;
