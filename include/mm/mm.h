@@ -47,9 +47,9 @@ typedef struct {
     uint32_t                type;
 } __attribute__((packed)) mmap_entry_t;
 
-mmap_entry_t *usable_memory[10];
-int available_mm;
+mmap_entry_t                *usable_memory[10];
+uint32_t                    available_mm;
 
-void set_usable_mm();
-void print_mmap(void);
+void set_usable_mm(mmap_entry_t *entry, uint32_t size);
+void print_mm_entries(mmap_entry_t *entry, uint32_t size);
 #endif

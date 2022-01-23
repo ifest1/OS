@@ -14,5 +14,4 @@ void irq_handler(registers_t regs) {
 
 void load_irq_handler(uint8_t irq_no, isr_t handler) {
     interrupt_handlers[irq_no] = handler;
-    printk("loaded interrupt handler", 1);
 }

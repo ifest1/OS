@@ -15,8 +15,7 @@ typedef struct entry block;
 
 int free_space;
 int initialized;
-void *memory_start;
-
+block *memory_start;
 block *free_lists[MAX_LVLS];
 
 /* API */
