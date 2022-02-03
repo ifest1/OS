@@ -23,7 +23,7 @@ void main(mboot_info_t *mboot_info, uint32_t magic) {
     blk3 = alloc(64);
     itoa(blk3, 16, blk3);
     printk(blk3, 1);
-    free(blk3);
+    // free(blk3);
 
     blk4 = alloc(64);
     itoa(blk4, 16, blk4);
