@@ -16,6 +16,7 @@ void _init_memory() {
     initialized = 1;
 }
 
+
 uint32_t _level_from_size(uint32_t size) {
     uint32_t level;
     for (level = MAX_LVLS; block_sizes[level] < size; level--);
@@ -110,6 +111,7 @@ void *alloc(uint32_t size) {
     mm_available -= (size + BLK_STRUCT_SIZE);
     return (((void *) _pop_freelist_head(level)) + BLK_STRUCT_SIZE);
 }
+
 
 void free(void *chunk) {
     block *blk = (block *) (chunk - BLK_STRUCT_SIZE);
