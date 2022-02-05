@@ -1,30 +1,56 @@
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdarg.h>
 #include <drivers/screen.h>
 
-/* Main print string kernel function */
-void printk(char *str, bool nl) {
-    uint16_t cursor_pos = get_cursor();
-    uint8_t cursor_x = x(cursor_pos) + 1;
 
-    while(*str != 0) {
-        print_char(cursor_pos++, *str++, BLACK_ON_WHITE);
-        cursor_x++;
+void print(char *str, ...) {
+    char c;
+    char *buf;
+    uint32_t i;
+    uint16_t cursor_pos = get_cursor();
+    va_list arg;
+    va_start(arg, str);
+
+    while (*str != 0) {
+        if (*str == '\n') {
+            newline_cursor();
+            str++;
+        }
+        else if (*str == '%') {
+            str++;
+            switch(*str) {
+                case 'd':
+                    i = va_arg(arg, int *);
+                    // should print a string instead of a char, otherwise we will be printing
+                    // only the first character. We also want to support print hex '%x'.
+                    print_char(cursor_pos++, *itoa(i, 10), BLACK_ON_WHITE);
+                    set_cursor(cursor_pos);
+                    break;
+                case 'c':
+                    c = va_arg(arg, char *);
+                    print_char(cursor_pos++, c, BLACK_ON_WHITE);
+                    set_cursor(cursor_pos);
+                    break;
+            }
+            str++;
+        }
+        else {
+            print_char(cursor_pos++, *str++, BLACK_ON_WHITE);
+            set_cursor(cursor_pos);
+        }
     }
-    if (nl) {
-        newline_cursor();
-    }
-    else {
-        set_cursor(cursor_pos);
-    }
+    va_end(arg);
 }
 
-char *itoa(int n, int base, char *str) {
+
+char *itoa(int n, int base) {
     int i = 0;
     int j = 0;
     int k = 0;
     char temp[32];
     char digits[] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+    static char str[20];
 
     if (n == 0) {
         str[i++] = '0';
@@ -46,8 +72,8 @@ char *itoa(int n, int base, char *str) {
         str[j] = temp[i];
 
     return str;
-
 }
+
 
 void memcpy(void *dest, void *src, int size) {
     char *d = (char *) dest;
@@ -56,11 +82,13 @@ void memcpy(void *dest, void *src, int size) {
         *d++ = *s++;
 }
 
+
 void memset(void *str, char c, int n) {
     char *s = (char *) str;
     for(int i = 0; i < n; i++)
         *s++ = c;
 }
+
 
 /* comparator must receive variable with different type */
 void merge(int *a, int b, int m, int e, int (*c)(int v1, int v2)) {
@@ -104,6 +132,7 @@ void merge(int *a, int b, int m, int e, int (*c)(int v1, int v2)) {
     }
 }
 
+
 void ms(int *n, int b, int e, int (*c)(int v1, int v2)) {
     if (b < e) {
         int m = (b + e) / 2;
@@ -112,6 +141,7 @@ void ms(int *n, int b, int e, int (*c)(int v1, int v2)) {
         merge(n, b, m, e, c);
     }
 }
+
 
 int comp(int a, int b) {
     return a < b;
