@@ -3,7 +3,6 @@
 
 
 void print_mm_entries(mmap_entry_t *entry, uint32_t size) {
-    char *buf;
     for (uint32_t i = 0; i < size; i++) {
         if (entry->type == 0) break;
         print("Type: %d\n", entry->type);
