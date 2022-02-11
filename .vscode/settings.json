@@ -6,7 +6,8 @@
     "keyboard.h": "c",
     "isr.h": "c",
     "screen.h": "c",
-    "timer.h": "c"
+    "timer.h": "c",
+    "stdlib.h": "c"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }

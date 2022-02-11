@@ -88,7 +88,6 @@ void *_get_blk_buddy(block *blk) {
 
 void *alloc(uint32_t size) {
     uint32_t level;
-    block *blk;
 
     if (!initialized) {
         _init_memory();
@@ -119,7 +118,7 @@ void free(void *chunk) {
 
     mm_available += (blk->size + BLK_STRUCT_SIZE);
 
-    while (level >= 0) {
+    while (level > 0) {
         block *buddy = _get_blk_buddy(blk);
         if (!(buddy)) {
             return _insert_freelist_head(blk, level);

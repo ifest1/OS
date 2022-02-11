@@ -6,7 +6,6 @@
 
 void print(char *str, ...) {
     char c;
-    char *buf;
     uint32_t i;
     uint16_t cursor_pos = get_cursor();
     va_list arg;
@@ -49,8 +48,9 @@ char *itoa(int n, int base) {
     int j = 0;
     int k = 0;
     char temp[32];
-    char digits[] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
     static char str[20];
+    char digits[] = {'0','1','2','3','4','5','6','7',
+                     '8','9','A','B','C','D','E','F'};
 
     if (n == 0) {
         str[i++] = '0';

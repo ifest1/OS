@@ -55,4 +55,5 @@ extern void isr44();
 extern void isr45();
 extern void isr46();
 extern void isr47();
+extern void irq_128_handler();
 #endif

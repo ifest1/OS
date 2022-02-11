@@ -6,8 +6,8 @@ isr_t           interrupt_handlers[256];
 
 void irq_handler(registers_t regs) {
     if (interrupt_handlers[regs.int_no] != 0) {
-        isr_t handler = interrupt_handlers[regs.int_no];
-        handler(regs);
+        isr_t irq_handler = interrupt_handlers[regs.int_no];
+        irq_handler(regs);
     }
     send_pic_eoi(regs.int_no);
 }

@@ -1,5 +1,7 @@
 [BITS 32]
 [extern irq_handler]
+[extern syscall_handler]
+
 MULTIBOOT_PAGE_ALIGN	      equ 1<<0
 MULTIBOOT_MEMORY_INFO	      equ 1<<1
 MULTIBOOT_HEADER_MAGIC	    equ 0x1BADB002
@@ -49,6 +51,69 @@ gdt_flush:
     mov ss, ax
     ret
 
+GLOBAL call_sys
+call_sys:
+    push ebp
+    mov ebp, esp
+    mov eax, [ebp + 28]
+    push eax
+    mov eax, [ebp + 24]
+    push eax
+    mov eax, [ebp + 20]
+    push eax
+    mov eax, [ebp + 16]
+    push eax
+    mov eax, [ebp + 12]
+    push eax
+    mov eax, [ebp + 8]
+    call eax
+    add esp, 20
+
+    pop ebp
+    ret
+
+GLOBAL _syscall0, _syscall1, _syscall2, _syscall3, _syscall4, _syscall5
+_syscall0:
+	mov eax, [esp + 4]
+	int 0x80
+	ret
+
+_syscall1:
+	push ebx
+	mov eax, [esp + 4 + 4]
+	mov ebx, [esp + 4 + 8]
+	int 0x80
+	pop ebx
+	ret
+
+_syscall2:
+	push ebx
+	push ecx
+
+	mov eax, [esp + 8 + 4]
+	mov ebx, [esp + 8 + 8]
+	mov ecx, [esp + 8 + 12]
+	int 0x80
+
+	pop ecx
+	pop ebx
+	ret
+
+_syscall3:
+	push ebx
+	push ecx
+
+	mov eax, [esp + 8 + 4]
+	mov ebx, [esp + 8 + 8]
+	mov ecx, [esp + 8 + 12]
+  mov edx, [esp + 8 + 16]
+	int 0x80
+
+	pop ecx
+	pop ebx
+	ret
+  iret
+
 %macro ISR_NOERRCODE 1
   [GLOBAL isr%1]
   isr%1:
@@ -85,6 +150,32 @@ isr_common_stub:
   mov gs, ax
 
   call irq_handler
+
+  pop eax
+  mov ds, ax
+  mov es, ax
+  mov fs, ax
+  mov gs, ax
+
+  popa
+  add esp, 8
+  sti
+  iret
+
+GLOBAL irq_128_handler
+irq_128_handler:
+  pusha
+
+  mov ax, ds
+  push eax
+
+  mov ax, 0x10
+  mov ds, ax
+  mov es, ax
+  mov fs, ax
+  mov gs, ax
+
+  call syscall_handler
 
   pop eax
   mov ds, ax

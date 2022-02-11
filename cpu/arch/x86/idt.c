@@ -5,6 +5,7 @@
 #include <drivers/screen.h>
 #include <stdlib.h>
 
+
 idtr_t          idt_ptr;
 idt_entry_t     idt[256];
 
@@ -82,7 +83,10 @@ void idt_init() {
     set_idt_gate(45, (uint32_t) isr45, 0x08, 0x8E);
     set_idt_gate(46, (uint32_t) isr46, 0x08, 0x8E);
     set_idt_gate(47, (uint32_t) isr47, 0x08, 0x8E);
-    print("IDT Gates loaded.\n");
+
+    set_idt_gate(128, (uint32_t) irq_128_handler, 0x08, 0x8E);
+
+    print("IDT Gates loaded\n");
     idt_flush();
-    print("CPU IDT Pointer loaded.\n");
+    print("CPU IDT Pointer loaded\n");
 }
