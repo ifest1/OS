@@ -1,4 +1,4 @@
-# Operating System from scratch (educational purpose)
+# Operating System from scratch
 
 # [LICENSE](LICENSE)
 
